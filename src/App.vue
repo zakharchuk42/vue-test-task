@@ -1,11 +1,20 @@
-<template>
-123
-</template>
-
-<script lang="ts">
-
+<script setup lang="ts">
+import MainLayout from '@/Layouts/MainLayout.vue';
 </script>
 
-<style>
+<template>
+	<MainLayout>
+		<router-view />
+	</MainLayout>
+</template>
 
+<style>
+body {
+	margin: 0;
+}
+
+#app {
+	display: flex;
+	min-height: 100vh;
+}
 </style>
