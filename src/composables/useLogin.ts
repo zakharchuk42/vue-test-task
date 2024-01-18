@@ -2,8 +2,9 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { IUser } from '@/utils/types';
-import {phoneFormatter} from '@/utils/funstions';
+import {phoneFormatter} from '@/utils/functions';
 import {url} from '@/utils/constants';
+import {userStore} from '@/modules/user';
 
 export function useLogin() {
 	const username = ref('');
@@ -27,6 +28,7 @@ export function useLogin() {
 			});
 
 			if (matchedUser) {
+				userStore.value = matchedUser
 				await router.push('/dashboard');
 				username.value = ''
 				phone.value = ''

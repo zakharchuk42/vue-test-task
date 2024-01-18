@@ -13,6 +13,7 @@
 		padding: 10px;
 		background: #545454;
 		display: flex;
+		justify-content: center;
 		flex: 1;
 	}
 </style>

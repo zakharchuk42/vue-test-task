@@ -36,7 +36,6 @@ const writeableComputed = computed<string>({
 		emit('update:modelValue', value.trim())
 	},
 })
-
 const {errorText, validate} = validateMap[props.type]
 
 function validateInput() {
@@ -46,7 +45,7 @@ function validateInput() {
 </script>
 
 <template>
-	<div class="input-wrapper">
+	<div v-if="!type" class="input-wrapper">
 		<input type="text"
 		       :required="required"
 		       :placeholder="placeholder"
@@ -56,12 +55,20 @@ function validateInput() {
 			{{errorText}}
 		</p>
 	</div>
+	<div v-else class="input-wrapper">
+		<input type="text"
+		       :required="required"
+		       :placeholder="placeholder"
+		       v-model="writeableComputed"
+		/>
+	</div>
 </template>
 
 <style scoped>
 	.input-wrapper {
 		position: relative;
 		display: flex;
+		width: 100%;
 	}
 
 	input {

@@ -1,10 +1,64 @@
+<script setup lang="ts">
+import {useFetchTodo} from '@/composables/useFetchTodo';
+import {onMounted, watch} from 'vue';
+import BaseSelect from '@/components/BaseSelect.vue';
+import {todoStatus, usersId} from '@/utils/constants';
+import BaseInput from '@/components/BaseInput.vue';
+import {EnumValidationType} from '@/utils/types';
+import TodoTable from '@/components/TodoTable.vue';
+import {todosStore} from '@/modules/todo';
+
+onMounted(() => {
+	fetchData({
+		userId: null,
+		completed: null
+	})
+})
+
+const {loading, userId, completed, findText, fetchData} = useFetchTodo()
+
+watch([userId, completed], ([newUserId, newCompleted]) => {
+
+	fetchData({
+		userId: newUserId === 'All users' ? null : newUserId,
+		completed: newCompleted === 'All status' ? null : newCompleted,
+	});
+})
+
+</script>
+
 <template>
-	<div>
-		<h1>Dashboard</h1>
-		<p>Welcome to the dashboard!</p>
+	{{userId}}
+	<div class="dashboard-wrapper">
+		<div class="header-actions">
+			<BaseInput placeholder="Find todo..." v-model="findText" :type="EnumValidationType.TEXT"/>
+			<BaseSelect placeholder="User ID"
+			            :options="usersId"
+			            @select="userId = $event"
+			/>
+			<BaseSelect placeholder="Task completed"
+			            :options="todoStatus"
+			            @select="completed = $event"
+			/>
+		</div>
+		<TodoTable :todos="todosStore"/>
 	</div>
 </template>
 
-<script setup lang="ts">
-// Цей компонент може містити вашу логіку панелі управління
-</script>
+<style scoped>
+	.header-actions {
+		display: flex;
+		gap: 6px;
+	}
+
+	.dashboard-wrapper {
+		max-width: 1200px;
+		width: 100%
+	}
+
+	@media (max-width: 600px) {
+		.header-actions {
+			flex-direction: column;
+		}
+	}
+</style>
