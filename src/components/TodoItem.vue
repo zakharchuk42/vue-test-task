@@ -20,5 +20,9 @@ defineProps({
 	.todo-item {
 		display: flex;
 		justify-content: space-between;
+		padding: 10px;
+		border-radius: 5px;
+		background-color: #fff;
+		gap: 10px;
 	}
 </style>

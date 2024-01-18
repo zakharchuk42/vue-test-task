@@ -7,6 +7,7 @@ import BaseInput from '@/components/BaseInput.vue';
 import {EnumValidationType} from '@/utils/types';
 import TodoTable from '@/components/TodoTable.vue';
 import {todosStore} from '@/modules/todo';
+import BaseLoading from '@/components/BaseLoading.vue';
 
 onMounted(() => {
 	fetchData({
@@ -28,7 +29,6 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 </script>
 
 <template>
-	{{userId}}
 	<div class="dashboard-wrapper">
 		<div class="header-actions">
 			<BaseInput placeholder="Find todo..." v-model="findText" :type="EnumValidationType.TEXT"/>
@@ -41,7 +41,10 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 			            @select="completed = $event"
 			/>
 		</div>
-		<TodoTable :todos="todosStore"/>
+		<div v-if="loading" class="loading-block">
+			<BaseLoading />
+		</div>
+		<TodoTable v-else :todos="todosStore"/>
 	</div>
 </template>
 
@@ -54,6 +57,13 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 	.dashboard-wrapper {
 		max-width: 1200px;
 		width: 100%
+	}
+
+	.loading-block {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
 	}
 
 	@media (max-width: 600px) {
