@@ -8,6 +8,7 @@ import {EnumValidationType} from '@/utils/types';
 import TodoTable from '@/components/TodoTable.vue';
 import {searchTodo} from '@/modules/todo';
 import BaseLoading from '@/components/BaseLoading.vue';
+import AddTodo from '@/components/AddTodo.vue';
 
 onMounted(() => {
 	fetchData({
@@ -32,7 +33,7 @@ const todos = computed(() => searchTodo(findText.value))
 <template>
 	<div class="dashboard-wrapper">
 		<div class="header-actions">
-			<BaseInput placeholder="Find todo..." v-model="findText" :type="EnumValidationType.TEXT"/>
+			<BaseInput placeholder="Find todo..." v-model="findText" />
 			<BaseSelect placeholder="User ID"
 			            :options="usersId"
 			            @select="userId = $event"
@@ -46,21 +47,23 @@ const todos = computed(() => searchTodo(findText.value))
 			<BaseLoading />
 		</div>
 		<TodoTable v-else :todos="todos"/>
+		<AddTodo />
 	</div>
 </template>
 
 <style scoped>
-	.header-actions {
-		display: flex;
-		gap: 6px;
-	}
-
 	.dashboard-wrapper {
 		max-width: 1200px;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
+		position: relative;
+	}
+
+	.header-actions {
+		display: flex;
+		gap: 6px;
 	}
 
 	.loading-block {

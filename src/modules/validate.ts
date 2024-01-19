@@ -37,3 +37,14 @@ export const validatePhoneInput = () => {
 
 	return {errorText, validate}
 };
+
+export const withoutValidate = () => {
+	const errorText = ref('');
+
+	const validate = (writeableComputed: Ref<string>) => {
+		const inputValue = writeableComputed.value;
+		writeableComputed.value = inputValue.trim();
+	}
+
+	return {errorText, validate}
+};

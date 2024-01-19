@@ -32,11 +32,13 @@ interface IValidationType {
 export interface Validations {
 	[EnumValidationType.TEXT]: IValidationType;
 	[EnumValidationType.PHONE]: IValidationType;
+	[EnumValidationType.WITHOUT]: IValidationType;
 }
 
 export const enum EnumValidationType {
 	TEXT = 'text',
 	PHONE = 'phone',
+	WITHOUT = 'without',
 }
 
 export const enum EnumButtonType {

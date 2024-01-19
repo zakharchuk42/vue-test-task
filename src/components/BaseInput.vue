@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, defineProps} from 'vue';
-import {validatePhoneInput, validateTextInput} from '@/modules/validate';
+import {validatePhoneInput, validateTextInput, withoutValidate} from '@/modules/validate';
 import {EnumValidationType, Validations} from '@/utils/types';
 
 const props = defineProps({
@@ -17,13 +17,14 @@ const props = defineProps({
 	},
 	type: {
 		type: String as () => EnumValidationType,
-		default: null
+		default: EnumValidationType.WITHOUT
 	}
 });
 
 const validateMap: Validations = {
 	text: validateTextInput(),
 	phone: validatePhoneInput(),
+	without: withoutValidate(),
 }
 
 const emit = defineEmits(['update:modelValue'])
@@ -36,6 +37,7 @@ const writeableComputed = computed<string>({
 		emit('update:modelValue', value.trim())
 	},
 })
+
 const {errorText, validate} = validateMap[props.type]
 
 function validateInput() {
@@ -50,17 +52,17 @@ function validateInput() {
 		       :required="required"
 		       :placeholder="placeholder"
 		       v-model="writeableComputed"
-		       @input="validateInput"/>
-		<p class="error-text" v-show="errorText">
-			{{errorText}}
-		</p>
+		/>
 	</div>
 	<div v-else class="input-wrapper">
 		<input type="text"
 		       :required="required"
 		       :placeholder="placeholder"
 		       v-model="writeableComputed"
-		/>
+		       @input="validateInput"/>
+		<p class="error-text" v-show="errorText">
+			{{errorText}}
+		</p>
 	</div>
 </template>
 
