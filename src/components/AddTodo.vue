@@ -28,9 +28,10 @@ function handleClick() {
 
 <style scoped>
 	.add-todo {
+		border-top: 1px solid #545454;
 		background: #474747;
 		padding: 10px 0;
-		height: 60px;
+		min-height: 60px;
 		position: fixed;
 		width: 100%;
 		bottom: 0;
@@ -45,5 +46,12 @@ function handleClick() {
 		gap: 6px;
 		max-width: 1200px;
 		width: 100%;
+		padding: 0 10px;
+	}
+
+	@media (max-width: 600px) {
+		.container{
+			flex-direction: column;
+		}
 	}
 </style>
