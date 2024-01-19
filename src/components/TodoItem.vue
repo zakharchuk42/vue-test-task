@@ -11,7 +11,10 @@ defineProps({
 
 <template>
 	<div class="todo-item">
-		<div>{{todo.title}}</div>
+		<div class="todo-item__left">
+			<div>{{todo.userId}}</div>
+			<div>{{todo.title}}</div>
+		</div>
 		<div>{{todo.completed}}</div>
 	</div>
 </template>
@@ -21,8 +24,17 @@ defineProps({
 		display: flex;
 		justify-content: space-between;
 		padding: 10px;
-		border-radius: 5px;
-		background-color: #fff;
 		gap: 10px;
+		cursor: pointer;
+		transition: all .3s ease;
+	}
+
+	.todo-item:hover {
+		background-color: #dedede;
+	}
+
+	.todo-item__left {
+		display: flex;
+		gap: 20px;
 	}
 </style>

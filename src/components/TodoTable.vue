@@ -15,7 +15,7 @@ defineProps({
 
 <template>
 	<div class="todo-table">
-		<TodoItem v-for="(todo, index) in todos" :key="todo.id" :todo="todo" :class="index % 2 ? 'row-color' : 'row-color_secondary'"/>
+		<TodoItem v-for="(todo, index) in todos" :key="todo.id" :todo="todo" :class="`${index % 2 ? 'row-color' : 'row-color_secondary'} row`"/>
 	</div>
 </template>
 
@@ -23,15 +23,20 @@ defineProps({
 	.todo-table {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
-		padding: 25px 0;
+		border-radius: 5px;
+		overflow: hidden;
+		background: #FFF;
+	}
+
+	.row {
+		border-bottom: 1px solid #A5A5A5;
 	}
 
 	.row-color {
-		background: #A5A5A5;
+		background: #FFF;
 	}
 
 	.row-color_secondary {
-		background: #C3C3C3;
+		background: #f5f5f5;
 	}
 </style>

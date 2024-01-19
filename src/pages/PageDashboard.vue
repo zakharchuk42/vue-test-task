@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {useFetchTodo} from '@/composables/useFetchTodo';
-import {onMounted, watch} from 'vue';
+import {computed, onMounted, watch} from 'vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 import {todoStatus, usersId} from '@/utils/constants';
 import BaseInput from '@/components/BaseInput.vue';
 import {EnumValidationType} from '@/utils/types';
 import TodoTable from '@/components/TodoTable.vue';
-import {todosStore} from '@/modules/todo';
+import {searchTodo} from '@/modules/todo';
 import BaseLoading from '@/components/BaseLoading.vue';
 
 onMounted(() => {
@@ -26,6 +26,7 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 	});
 })
 
+const todos = computed(() => searchTodo(findText.value))
 </script>
 
 <template>
@@ -44,7 +45,7 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 		<div v-if="loading" class="loading-block">
 			<BaseLoading />
 		</div>
-		<TodoTable v-else :todos="todosStore"/>
+		<TodoTable v-else :todos="todos"/>
 	</div>
 </template>
 
@@ -56,7 +57,10 @@ watch([userId, completed], ([newUserId, newCompleted]) => {
 
 	.dashboard-wrapper {
 		max-width: 1200px;
-		width: 100%
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
 	}
 
 	.loading-block {
